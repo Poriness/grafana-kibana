@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: auth-service
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - image: dietaryapp.azurecr.io/auth-service:latest
+          name: auth-service
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+status: {}
