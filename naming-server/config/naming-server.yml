@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: naming-server
+  name: naming-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: naming-server
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: naming-server
+    spec:
+      containers:
+        - image: dietaryapp.azurecr.io/naming-server:latest
+          name: naming-server
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: naming-server
+  name: naming-server
+spec:
+  ports:
+    - name: 8761-8761
+      port: 8761
+      protocol: TCP
+      targetPort: 8761
+  selector:
+    app: naming-server
+  type: ClusterIP

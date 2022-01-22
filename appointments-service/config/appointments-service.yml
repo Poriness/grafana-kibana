@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: appointments-service
+  name: appointments-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appointments-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: appointments-service
+    spec:
+      containers:
+        - image: dietaryapp.azurecr.io/appointments-service:latest
+          name: appointments-service
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: appointments-service
+  name: appointments-service
+spec:
+  ports:
+    - name: 8000-8000
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app: appointments-service
+  type: ClusterIP
+
+  az aks update -n dietaryapp -g SR --attach-acr $MYACR
