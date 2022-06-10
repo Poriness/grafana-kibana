@@ -1,0 +1,11 @@
+# List of pipelines to be loaded by Logstash
+
+- pipeline.id: users_service
+  path.config: "/config/users_service.config"
+
+- pipeline.id: auth_service
+  path.config: "/config/auth_service.config"
+   
+- pipeline.id: appointments_service
+  path.config: "/config/appointments_service.config"
+
