@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 public class ClientController {
 
@@ -23,6 +24,7 @@ public class ClientController {
 
     @GetMapping("/client/all")
     public List<ClientResponse> getAllClients() {
+        log.info("INFO - get /user/all");
         return clientService.getAllClients().stream()
                 .map(ClientResponse::new)
                 .collect(Collectors.toList());
@@ -39,7 +41,7 @@ public class ClientController {
                     .body(new MessageResponse(e.getMessage()));
         }
         String m = "Successfully associate dietitian '" + associationRequest.getDietitianUsername() + "' to client '" + associationRequest.getClientUsername() + "'.";
-
+        log.info(m);
         return ResponseEntity.ok(new MessageResponse(m));
     }
 

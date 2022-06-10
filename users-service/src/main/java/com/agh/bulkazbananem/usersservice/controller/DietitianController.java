@@ -31,6 +31,7 @@ public class DietitianController {
 
     @GetMapping("/dietitian/all")
     public List<DietitianResponse> getAllDietitians() {
+        log.info("INFO - get /dietitian/all");
         return dietitianService.getAllDietitians().stream()
                 .map(DietitianResponse::new)
                 .collect(Collectors.toList());
@@ -46,7 +47,7 @@ public class DietitianController {
                     .badRequest()
                     .body(new MessageResponse(e.getMessage()));
         }
-        log.info("[DIETITIAN CREATED]");
+        log.info("[DIETITIAN CREATED] : " + newUser.getUsername());
         return ResponseEntity.ok(new MessageResponse("Dietitian registered successfully!"));
     }
 

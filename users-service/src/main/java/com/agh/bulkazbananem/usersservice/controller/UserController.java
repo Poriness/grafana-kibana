@@ -8,6 +8,8 @@ import com.agh.bulkazbananem.usersservice.model.StateOfUser;
 import com.agh.bulkazbananem.usersservice.model.User;
 import com.agh.bulkazbananem.usersservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,7 @@ public class UserController {
 
     @GetMapping("/user/all")
     public List<UserResponse> getAllUsers() {
+        log.info("INFO - get /user/all");
         return userService.getUsers().stream()
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
@@ -47,7 +50,7 @@ public class UserController {
                     .body(new MessageResponse(e.getMessage()));
         }
 
-        log.info("[USER REGISTER]");
+        log.info("Registered new user: " + newUser.getUsername());
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
@@ -62,7 +65,7 @@ public class UserController {
                     .body(new MessageResponse(e.getMessage()));
         }
 
-        log.info("[USER CREATED]");
+        log.info("Created new user: " + newUser.getUsername());
         return ResponseEntity.ok(new MessageResponse("User registered and activated successfully!"));
     }
 
@@ -80,7 +83,7 @@ public class UserController {
                     .body(new MessageResponse(String.format("User %s is already active!", username)));
         }
         userService.activateClient(username);
-        log.info("[USER ACTIVATED]");
+        log.info("Activated user:  " + username);
         return ResponseEntity.ok(new MessageResponse("User activated successfully!"));
     }
 
@@ -88,7 +91,8 @@ public class UserController {
     public ResponseEntity<?> getUserById(@PathVariable Integer userId) {
         Optional<User> user = userService.findUserById(userId);
         if (user.isEmpty()) {
-            return ResponseEntity.ok(new MessageResponse(String.format("There is noo user with id %s", userId)));
+            log.info("This user does not exist:  " + userId);
+            return ResponseEntity.ok(new MessageResponse(String.format("There is no user with id %s", userId)));
         }
         return ResponseEntity.ok(new UserResponse(user.get()));
     }

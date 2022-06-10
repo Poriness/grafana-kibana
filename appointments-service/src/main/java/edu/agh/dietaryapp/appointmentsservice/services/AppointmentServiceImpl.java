@@ -32,8 +32,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> findAll() {
-        return appointmentRepository.findAll();
+        public List<Appointment> findAll() {
+            return appointmentRepository.findAll();
     }
 
     @Override
